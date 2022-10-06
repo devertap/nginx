@@ -22,7 +22,7 @@ jobs:
       id: build
       run: |
         # Build a docker container and push it to CR
-        docker pull nginx
+        docker pull nginx:1.22.0
         docker tag nginx docker.io/shabbirsaifee/nginx:${GITHUB_REF##*/}
         
         echo "Pushing image to CR..."
