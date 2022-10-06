@@ -23,8 +23,11 @@ jobs:
       run: |
         # Build a docker container and push it to CR
         git_hash=$(git rev-parse --short "$GITHUB_SHA")
-        docker build -t shabbirsaifee/nginx:${GITHUB_REF##*/}-$git_hash .
+        docker pull nginx
+        docker tag nginx docker.io/shabbirsaifee/nginx:${GITHUB_REF##*/}-$git_hash
+        
         echo "Pushing image to CR..."
-        docker push shabbirsaifee/nginx:${GITHUB_REF##*/}-$git_hash
+        
+        docker push docker.io/shabbirsaifee/nginx:${GITHUB_REF##*/}-$git_hash
         echo "::set-output name=IMAGE_TAG::${GITHUB_REF##*/}-$git_hash"
-        echo "::set-output name=image::shabbirsaifee/nginx:${GITHUB_REF##*/}-$git_hash"
+        echo "::set-output name=image::docker.io/shabbirsaifee/nginx:${GITHUB_REF##*/}-$git_hash"
